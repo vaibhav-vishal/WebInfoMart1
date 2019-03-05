@@ -43,9 +43,10 @@ public class ExcelReader {
 				System.out.println(file2op[row][col]);
 			}
 		}
-		
+
 		System.out.println("\n \n \n");
-		String[] sequence = { "file1 col1", "file1 col2", "file1 col3", "file2 col1", "file2 col2","file2 col3" };
+		String[] sequence = { "file2 col1", "file1 col2", "file1 col3", "file1 col5", "file1 col1", "file2 col2",
+				"file2 col3", "file1 col4" };
 		String[][] abc = finalResult(file1op, file2op, sequence);
 		for (int row = 0; row < abc.length; row++) {
 			for (int col = 0; col < abc[row].length; col++) {
@@ -116,6 +117,7 @@ public class ExcelReader {
 	// maniplutes data from two excels into a single 2D array according to sequence
 	public static String[][] finalResult(String[][] file1op, String[][] file2op, String[] sequence) {
 
+
 		String[][] resFile = new String[file1op.length][sequence.length];
 		for (int i = 0; i < sequence.length; i++) {
 			String[] arrOfStr = sequence[i].split(" ");
@@ -125,15 +127,12 @@ public class ExcelReader {
 			String[] colno = secondPart.split("col");
 			int fileNumber = Integer.parseInt(fileno[1]);
 			int colNumber = Integer.parseInt(colno[1]);
-			for (int j = 0; j < file1op.length; j++) {
-				for (int k = 0; k < sequence.length; k++) {
-					if (fileNumber == 1) {
-						resFile[j][k] = file1op[j][colNumber];
-					} else {
-						resFile[j][k] = file2op[j][colNumber];
-					}
-				}
+			String[][] t = file1op;
+			if (fileNumber == 2)
+				t = file2op;
 
+			for (int j = 0; j < t.length; j++) {
+				resFile[j][i] = t[j][colNumber - 1];
 			}
 		}
 		return resFile;
